@@ -1,17 +1,25 @@
-
+import {BrowserRouter as Router , Routes, Route} from "react-router-dom";
+import Home from "./pages/Home.jsx"
+import About from "./pages/About.jsx";
+import SignIn from "./pages/SignIn.jsx";
+import SignUp from "./pages/SignUp.jsx";
+import Project from "./pages/Project.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
 
 function App() {
   return (
-    <>
-      <div className=" w-full px-20 py-5 mx-auto text-center min-h-screen">
-        <h1
-          className="text-3xl font-bold
-         bg-slate-400 p-6 rounded-md"
-        >
-          This is my 2nd full stack project using MERN stack: Blog app{" "}
-        </h1>
-      </div>
-    </>
+   <Router>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/sign-in" element={<SignIn />} />
+      <Route path="/sign-up" element={<SignUp />} />
+      <Route path="/sign-up" element={<SignUp />} />
+      <Route path="/project" element={<Project />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+    </Routes>
+   </Router>
+
   );
 }
 
