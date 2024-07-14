@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import userRouter from "./src/routes/user.route.js";
 import authRouter from "./src/routes/auth.route.js";
 
-dotenv.config();
+dotenv.config(); 
 
 mongoose
   .connect(process.env.MONGODB_URI, {
@@ -44,3 +44,4 @@ app.use((err, req, res, next) => {
     message,
   });
 }); 
+ 
