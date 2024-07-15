@@ -1,15 +1,23 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { useState } from "react";
+import {
+  signInStart,
+  signInSuccess,
+  signInFailure,
+} from "../redux/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({});
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  // const [errorMessage, setErrorMessage] = useState(null);
+  // const [loading, setLoading] = useState(false);
 
- 
-  console.log(formData);
+  // apply react-redux toolkit- useSelector & useDispatch
+  const { loading, error: errorMessage } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -21,37 +29,40 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if ( !formData.email || !formData.password) {
-      return setErrorMessage("Please fill out all fields");
+    if (!formData.email || !formData.password) {
+      return dispatch(signInFailure("Please fill out all fields"));
     }
 
-    
+    try {
+      //setLoading(true);
+      //setErrorMessage(null);
+      dispatch(signInStart);
 
-      try {
-        setLoading(true);
-        // use fetch method for form submitting
-        const res = await fetch("/api/auth/signin", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
-        const data = await res.json();
-  
-        if (data.success === false) {
-          setLoading(false);
-          setErrorMessage(data.message);
-          return;
-        }
-        setLoading(false);
-        setErrorMessage(null);
-        navigate("/");
-      } catch (error) {
-        setLoading(false);
-        setErrorMessage(error.message);
+      // uses fetch method for form submitting
+      const res = await fetch("/api/auth/signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+
+      if (data.success === false) {
+        // setLoading(false);
+        // setErrorMessage(data.message);
+        dispatch(signInFailure(data.message));
+        return;
       }
-    
+      // setLoading(false);
+      // setErrorMessage(null);
+      dispatch(signInSuccess(data));
+      navigate("/");
+    } catch (error) {
+      // setLoading(false);
+      // setErrorMessage(error.message);
+      dispatch(signInFailure(error.message));
+    }
   };
 
   return (
@@ -67,7 +78,7 @@ const SignIn = () => {
           </Link>
 
           <p className="text-sm mt-5">
-          &quot;Welcome Back – Log In to Continue Your Journey!&quot;
+            &quot;Welcome Back – Log In to Continue Your Journey!&quot;
           </p>
         </div>
 
