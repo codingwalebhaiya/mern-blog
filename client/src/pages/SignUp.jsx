@@ -67,8 +67,7 @@ const SignUp = () => {
           </Link>
 
           <p className="text-sm mt-5">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae
-            mollitia reiciendis repellat nostrum, laborum id?
+          &quot;Unlock Exclusive Content – Sign Up Today!&quot;
           </p>
         </div>
 
