@@ -7,6 +7,7 @@ import {
   signInFailure,
 } from "../redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import OAuth from "../components/OAuth";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({});
@@ -83,7 +84,7 @@ const SignIn = () => {
         </div>
 
         {/* right */}
-        <div className="flex-1">
+        <div className="flex-1 ">
           <form onSubmit={handleSubmit} className="flex flex-col gap-4 ">
             <div>
               <Label value="Your email" />
@@ -120,6 +121,8 @@ const SignIn = () => {
               )}
             </Button>
           </form>
+
+          <OAuth />
 
           <div className="flex gap-2 text-sm mt-5">
             <span>Don&apos;t have an account?</span>
