@@ -1,12 +1,17 @@
 import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react";
 import { Link} from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
-import { FaMoon } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { FaMoon , FaSun} from "react-icons/fa";
+import { useSelector, useDispatch } from "react-redux";
+import {toggleTheme} from "../redux/theme/themeSlice.js"
+
 
 const Header = () => {
   
   const { currentUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const {theme} = useSelector((state) => state.theme);
+  
   return (
     <header>
       <Navbar className="border-b-2">
@@ -45,8 +50,9 @@ const Header = () => {
             color="gray"
             pill
             aria-label="Toggle Dark Mode"
+            onClick={() => dispatch(toggleTheme())}
           >
-            <FaMoon />
+          {theme === 'light'? <FaSun /> :<FaMoon/>} 
           </Button>
           {currentUser ? (
             <Dropdown
